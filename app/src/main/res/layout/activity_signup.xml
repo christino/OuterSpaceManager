@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="750px"
+        android:layout_height="100px">
+
+        <TextView
+            android:id="@+id/labelIdentifiant"
+            android:layout_width="115dp"
+            android:layout_height="27dp"
+            android:text="Identifiant" />
+
+        <EditText
+            android:id="@+id/inputIdentifiant"
+            android:layout_width="179dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:layout_weight="0.02">
+
+        <TextView
+            android:id="@+id/labelPassword"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:text="Mot de passe" />
+
+        <EditText
+            android:id="@+id/inputPassword"
+            android:layout_width="183dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/signUpValidate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Valider" />
+
+</LinearLayout>
