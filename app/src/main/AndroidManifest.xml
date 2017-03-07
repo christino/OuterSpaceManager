@@ -20,6 +20,15 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="arnoux.com.outerspacemanager.outerspacemanager.MainActivity"
+            android:label="@string/app_name" >
+        </activity>
+
+
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
 
 </manifest>
