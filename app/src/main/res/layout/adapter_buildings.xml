@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+
+    <TextView
+        android:id="@+id/buildingShowName"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="TextView"
+        android:textSize="60px"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.17"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Niveau : "
+            android:layout_height="20dp" />
+
+        <TextView
+            android:id="@+id/buildingShowLevel"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:layout_weight="0.07" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Bonus : +"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:id="@+id/buildingShowAmountOfEffectByLevel"
+            android:layout_width="36dp"
+            android:layout_height="20dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Etat : "
+            android:layout_height="20dp" />
+
+        <TextView
+            android:id="@+id/buildingShowInConstruction"
+            android:layout_width="173dp"
+            android:layout_height="20dp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/buildingShowImage"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prix de l'amélioration"
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_weight="0.16"
+            android:text="Carburant : "/>
+
+        <TextView
+            android:id="@+id/buildingShowGasCostByLevel"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:layout_weight="0.05" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_weight="0.16"
+            android:text="Minéraux : "/>
+
+        <TextView
+            android:id="@+id/buildingShowMineralCostByLevel"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:layout_weight="0.05" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="Temps de l'amélioration  "/>
+
+        <TextView
+            android:id="@+id/buildingTimeBeforeUpgrade"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="  minutes"/>
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/buildingUpgrade"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColor="@color/green"
+        android:text="Rechercher"/>
+
+</LinearLayout>

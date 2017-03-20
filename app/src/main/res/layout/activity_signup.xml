@@ -48,6 +48,19 @@
         android:id="@+id/signUpValidate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Valider" />
+        android:text="Créer le compte" />
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login" />
+
+    <ImageView
+        android:id="@+id/buildingImageView"
+        android:layout_gravity="center"
+        android:layout_width="327dp"
+        android:layout_height="87dp"
+        android:layout_weight="0.17" />
 
 </LinearLayout>

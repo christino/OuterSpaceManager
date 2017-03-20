@@ -3,9 +3,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import arnoux.com.outerspacemanager.outerspacemanager.Entity.User;
 import arnoux.com.outerspacemanager.outerspacemanager.retrofit.model.OuterSpaceManagerService;
@@ -26,6 +31,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private Button signUpValidate;
     private EditText inputIdentifiant;
     private EditText inputPassword;
+    private Button login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +44,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             signUpValidate = (Button) findViewById(R.id.signUpValidate);
             inputIdentifiant = (EditText) findViewById(R.id.inputIdentifiant);
             inputPassword = (EditText) findViewById(R.id.inputPassword);
+            login = (Button) findViewById(R.id.login);
+            login.setOnClickListener(this);
             signUpValidate.setOnClickListener(this);
+            ImageView imageView = (ImageView) findViewById(R.id.buildingImageView);
+            Glide
+                    .with(this)
+                    .load("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQai0zkRWlwOjy_VotqCYXqfXFcFp-pm70KYRXaBmI23jR1HM3HJw")
+                    .centerCrop()
+                    .crossFade()
+                    .into(imageView);
         } else {
             Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
             startActivity(intent);
@@ -58,6 +73,42 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             OuterSpaceManagerService service = retrofit.create(OuterSpaceManagerService.class);
 
             Call<User> call = service.createUser(user);
+            call.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (response.isSuccessful()) {
+                        User user = response.body();
+                        SharedPreferences preferences = getSharedPreferences(SHARED_PREFERENCES_FILENAME, 0);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString(KEY_TOKEN, user.getToken());
+                        editor.commit();
+                        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    } else {
+                        //TODO: Handle errors here
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    //TODO: Handle errors here too
+                    Toast error = Toast.makeText(getApplicationContext(), "Ce compte existe déjà", 8);
+                    error.show();
+                }
+            });
+        }
+
+        if (view.getId() == R.id.login) {
+            User user = new User(inputIdentifiant.getText().toString(), inputPassword.getText().toString());
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://outer-space-manager.herokuapp.com")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            OuterSpaceManagerService service = retrofit.create(OuterSpaceManagerService.class);
+
+            Call<User> call = service.loginUser(user);
             call.enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {

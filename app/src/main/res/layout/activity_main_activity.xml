@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/userUsername"
@@ -11,14 +12,118 @@
         android:layout_weight="0.09"
         android:gravity="center"
         android:textSize="50px"
-        android:text="MainActivity" />
+        android:text="Username" />
 
-    <TextView
-        android:id="@+id/userPoints"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.04"
+        android:layout_height="wrap_content">
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="Score : " />
+
+        <TextView
+            android:id="@+id/userPoints"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.04"
+            android:textSize="30px"
+            android:text="Points" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="Carburant : " />
+
+        <TextView
+            android:id="@+id/userGas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.04"
+            android:textSize="30px"
+            android:text="Points" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="Mineraux : " />
+
+        <TextView
+            android:id="@+id/userMineral"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.04"
+            android:textSize="30px"
+            android:text="Points" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/menu_vuegenerale"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
         android:gravity="center"
-        android:textSize="30px"
-        android:text="MainActivity" />
+        android:text="Vue générale"
+        android:layout_weight="0.02" />
+
+    <Button
+        android:id="@+id/menu_batiments"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:gravity="center"
+        android:text="Bâtiments"
+        android:layout_weight="0.02" />
+
+    <Button
+        android:id="@+id/menu_flotte"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:gravity="center"
+        android:text="Flotte"
+        android:layout_weight="0.02" />
+
+    <Button
+        android:id="@+id/menu_recherches"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:gravity="center"
+        android:text="Recherches"
+        android:layout_weight="0.02" />
+
+    <Button
+        android:id="@+id/menu_chantierspacial"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:gravity="center"
+        android:text="Chantier Spacial"
+        android:layout_weight="0.02" />
+
+    <Button
+        android:id="@+id/menu_galaxie"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:gravity="center"
+        android:text="Galaxie"
+        android:layout_weight="0.02" />
+
+    <Button
+        android:id="@+id/deconnexion"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:gravity="center"
+        android:text="Deconnexion"
+        android:layout_weight="0.02"
+        android:background="@color/colorAccent"/>
+
 </LinearLayout>
+

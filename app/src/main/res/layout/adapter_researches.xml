@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+
+    <TextView
+        android:id="@+id/researchShowName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="TextView"
+        android:textSize="60px"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.00"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Niveau : "
+            android:layout_height="20dp" />
+
+        <TextView
+            android:id="@+id/researchShowLevel"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:layout_weight="0.07" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Effet : "
+            android:layout_height="20dp" />
+
+        <TextView
+            android:id="@+id/researchEffect"
+            android:layout_width="36dp"
+            android:layout_height="20dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Etat : "
+            android:layout_height="20dp" />
+
+        <TextView
+            android:id="@+id/researchShowInConstruction"
+            android:layout_width="173dp"
+            android:layout_height="20dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prix de l'amélioration"
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_weight="0.16"
+            android:text="Carburant : "/>
+
+        <TextView
+            android:id="@+id/researchShowGasCostByLevel"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:layout_weight="0.05" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_weight="0.16"
+            android:text="Minéraux : "/>
+
+        <TextView
+            android:id="@+id/researchShowMineralCostByLevel"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:layout_weight="0.05" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="Temps de l'amélioration  "/>
+
+        <TextView
+            android:id="@+id/researchTimeBeforeUpgrade"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="  minutes"/>
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/researchUpgrade"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColor="@color/green"
+        android:text="Rechercher"/>
+
+</LinearLayout>
