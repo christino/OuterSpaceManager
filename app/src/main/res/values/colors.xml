@@ -5,4 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="red">#FF0000</color>
     <color name="green">#00FF00</color>
+    <color name="spacialblue">#223C58</color>
+    <color name="spacialblack">#0E0D0F</color>
+    <color name="spacialgrey">#656871</color>
+    <color name="spacialred">#B22125</color>
 </resources>
