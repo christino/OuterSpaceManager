@@ -1,8 +1,11 @@
 package arnoux.com.outerspacemanager.outerspacemanager;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +15,7 @@ import android.widget.Toast;
 import arnoux.com.outerspacemanager.outerspacemanager.Entity.Building;
 import arnoux.com.outerspacemanager.outerspacemanager.Entity.Research;
 import arnoux.com.outerspacemanager.outerspacemanager.Entity.User;
+import arnoux.com.outerspacemanager.outerspacemanager.retrofit.model.OuterSpaceManagerDAO;
 import arnoux.com.outerspacemanager.outerspacemanager.retrofit.model.OuterSpaceManagerService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView userGas;
     private TextView userMineral;
     private Button research;
+    private Button galaxy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +52,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         deconnexion = (Button) findViewById(R.id.deconnexion);
         batiments = (Button) findViewById(R.id.menu_batiments);
         research = (Button) findViewById(R.id.menu_recherches);
+        galaxy = (Button) findViewById(R.id.menu_galaxie);
         deconnexion.setOnClickListener(this);
         batiments.setOnClickListener(this);
         research.setOnClickListener(this);
+        galaxy.setOnClickListener(this);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://outer-space-manager.herokuapp.com")
@@ -87,6 +94,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             editor.remove(KEY_TOKEN);
             editor.commit();
 
+            if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                OuterSpaceManagerDAO buildingDAO = new OuterSpaceManagerDAO(MainActivity.this);
+                buildingDAO.open();
+
+                buildingDAO.deleteAllBuildings();
+
+                buildingDAO.close();
+            }
+
             Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
             startActivity(intent);
         } else if (view.getId() == R.id.menu_batiments){
@@ -94,6 +110,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         } else if (view.getId() == R.id.menu_recherches){
             Intent intent = new Intent(MainActivity.this, ResearchesActivity.class);
+            startActivity(intent);
+        } else if (view.getId() == R.id.menu_galaxie){
+            Intent intent = new Intent(MainActivity.this, GalaxyActivity.class);
             startActivity(intent);
         }
 

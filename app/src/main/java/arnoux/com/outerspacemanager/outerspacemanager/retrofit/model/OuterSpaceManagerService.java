@@ -2,6 +2,7 @@ package arnoux.com.outerspacemanager.outerspacemanager.retrofit.model;
 
 import arnoux.com.outerspacemanager.outerspacemanager.Entity.Building;
 import arnoux.com.outerspacemanager.outerspacemanager.Entity.BuildingResponse;
+import arnoux.com.outerspacemanager.outerspacemanager.Entity.OtherUsersResponse;
 import arnoux.com.outerspacemanager.outerspacemanager.Entity.Research;
 import arnoux.com.outerspacemanager.outerspacemanager.Entity.ResearchResponse;
 import arnoux.com.outerspacemanager.outerspacemanager.Entity.User;
@@ -37,4 +38,7 @@ public interface OuterSpaceManagerService {
 
     @POST("/api/v1/searches/create/{searchId}")
     Call<Research> upgradeResearch(@Path("searchId") Integer searchId, @Header("x-access-token") String token);
+
+    @GET("/api/v1/users/0/19")
+    Call<OtherUsersResponse> getOtherUsers(@Header("x-access-token") String accessToken);
 }

@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +25,7 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 import arnoux.com.outerspacemanager.outerspacemanager.Entity.Building;
+import arnoux.com.outerspacemanager.outerspacemanager.Entity.BuildingDB;
 import arnoux.com.outerspacemanager.outerspacemanager.retrofit.model.OuterSpaceManagerDAO;
 import arnoux.com.outerspacemanager.outerspacemanager.retrofit.model.OuterSpaceManagerService;
 import retrofit2.Call;
@@ -33,6 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static arnoux.com.outerspacemanager.outerspacemanager.Settings.Setting.KEY_TOKEN;
 import static arnoux.com.outerspacemanager.outerspacemanager.Settings.Setting.MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE;
 import static arnoux.com.outerspacemanager.outerspacemanager.Settings.Setting.SHARED_PREFERENCES_FILENAME;
+import static java.lang.String.valueOf;
 
 /**
  * Created by White on 14/03/2017.
@@ -45,10 +49,13 @@ public class BuildingsAdapter extends RecyclerView.Adapter<BuildingsAdapter.Buil
     private final List<Building> buildings;
     private final Context context;
     private boolean inConstruction;
+    private BuildingDB currentbuildingdb;
+    private Handler handler;
 
     public BuildingsAdapter(List<Building> buildings, Context context) {
         this.buildings = buildings;
         this.context = context;
+        handler = new Handler();
     }
 
     @Override
@@ -60,7 +67,7 @@ public class BuildingsAdapter extends RecyclerView.Adapter<BuildingsAdapter.Buil
     }
 
     @Override
-    public void onBindViewHolder(BuildingsAdapter.BuildingViewHolder holder, int position) {
+    public void onBindViewHolder(final BuildingsAdapter.BuildingViewHolder holder, int position) {
 
         SharedPreferences settings = context.getSharedPreferences(SHARED_PREFERENCES_FILENAME, 0);
         final String currentToken = settings.getString(KEY_TOKEN, null);
@@ -80,8 +87,62 @@ public class BuildingsAdapter extends RecyclerView.Adapter<BuildingsAdapter.Buil
         final Integer gasPriceForUpgrade = (building.getLevel() * building.getGasCostByLevel());
         holder.buildingShowGasCostByLevel.setText(gasPriceForUpgrade.toString());
 
-        final Integer mineralPriceForUpgrade = (building.getLevel() * building.getMineralCostByLevel());
-        holder.buildingShowMineralCostByLevel.setText(mineralPriceForUpgrade.toString());
+        final int mineralPriceForUpgrade = (building.getLevel() * building.getMineralCostByLevel());
+        holder.buildingShowMineralCostByLevel.setText(valueOf(mineralPriceForUpgrade));
+
+        inConstruction = building.getInConstruction();
+        if (inConstruction == true){
+            holder.buildingShowInConstruction.setText("EN CONSTRUCTION");
+            holder.buildingShowInConstruction.setTextColor(Color.RED);
+            holder.buildingUpgrade.setVisibility(View.INVISIBLE);
+            holder.timeToUpgradeLabel.setText("Temps restant");
+        } else {
+            holder.buildingShowInConstruction.setText("DISPONIBLE");
+            holder.buildingShowInConstruction.setTextColor(Color.GREEN);
+            holder.timeToUpgradeLabel.setText("Temps pour l'amélioration");
+        }
+
+        Glide
+                .with(context)
+                .load(building.getImageUrl())
+                .centerCrop()
+                .crossFade()
+                .into(holder.buildingShowImage);
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            OuterSpaceManagerDAO buildingDAO = new OuterSpaceManagerDAO(context);
+            buildingDAO.open();
+            currentbuildingdb = buildingDAO.getCurrentBuilding(building.getBuildingId());
+            buildingDAO.close();
+
+            if(inConstruction && currentbuildingdb != null) {
+
+                final Long tempsDebut = currentbuildingdb.getTimeBuildingLaunched();
+
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+
+                        final Long tempsEcoule = (System.currentTimeMillis() - tempsDebut);
+                        final Long tempsRestant = ((timeForUpgrade * 60) - (tempsEcoule / 1000));
+
+                        if (tempsRestant > 60) {
+                            holder.buildingTimeBeforeUpgrade.setText(String.valueOf(tempsRestant / 60));
+                            holder.timeIndice.setText("minutes");
+                        } else if (tempsRestant == 0) {
+                            Intent intent = new Intent(context, MainActivity.class);
+                            context.startActivity(intent);
+                        } else {
+                            holder.buildingTimeBeforeUpgrade.setText(String.valueOf(tempsRestant));
+                            holder.timeIndice.setText("secondes");
+                        }
+
+                        handler.postDelayed(this, 1000);
+                    }
+                };
+                handler.post(runnable);
+            }
+        }
 
         holder.buildingUpgrade.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,13 +157,17 @@ public class BuildingsAdapter extends RecyclerView.Adapter<BuildingsAdapter.Buil
 
                     OuterSpaceManagerService service = retrofit.create(OuterSpaceManagerService.class);
 
-
+                    if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                         OuterSpaceManagerDAO buildingDAO = new OuterSpaceManagerDAO(context);
-                        Toast.makeText(context, "Test", Toast.LENGTH_LONG).show();
                         buildingDAO.open();
+
+                        buildingDAO.deleteBuilding(building.getBuildingId());
+
                         buildingDAO.createBuilding(building.getBuildingId(), building.getName(), building.getLevel(), building
                                 .getTimeToBuildByLevel(), System.currentTimeMillis());
+
                         buildingDAO.close();
+                    }
 
 
                     Call<Building> call = service.upgradeBuilding(buildingId, currentToken);
@@ -111,7 +176,6 @@ public class BuildingsAdapter extends RecyclerView.Adapter<BuildingsAdapter.Buil
                         @Override
                         public void onResponse(Call<Building> call, Response<Building> response) {
                             if (response.isSuccessful()) {
-
                                 Intent intent = new Intent(context, MainActivity.class);
                                 context.startActivity(intent);
                             } else {
@@ -127,23 +191,6 @@ public class BuildingsAdapter extends RecyclerView.Adapter<BuildingsAdapter.Buil
                 }
             }
         });
-
-        inConstruction = building.getInConstruction();
-        if (inConstruction == true){
-            holder.buildingShowInConstruction.setText("EN CONSTRUCTION");
-            holder.buildingShowInConstruction.setTextColor(Color.RED);
-            holder.buildingUpgrade.setVisibility(View.INVISIBLE);
-        } else {
-            holder.buildingShowInConstruction.setText("DISPONIBLE");
-            holder.buildingShowInConstruction.setTextColor(Color.GREEN);
-        }
-
-        Glide
-                .with(context)
-                .load(building.getImageUrl())
-                .centerCrop()
-                .crossFade()
-                .into(holder.buildingShowImage);
     }
 
     @Override
@@ -162,6 +209,8 @@ public class BuildingsAdapter extends RecyclerView.Adapter<BuildingsAdapter.Buil
         private TextView buildingShowMineralCostByLevel;
         private Button buildingUpgrade;
         private TextView buildingTimeBeforeUpgrade;
+        private TextView timeToUpgradeLabel;
+        private TextView timeIndice;
 
         public BuildingViewHolder(View itemView) {
             super(itemView);
@@ -174,6 +223,8 @@ public class BuildingsAdapter extends RecyclerView.Adapter<BuildingsAdapter.Buil
             buildingShowMineralCostByLevel = (TextView) itemView.findViewById(R.id.buildingShowMineralCostByLevel);
             buildingUpgrade = (Button) itemView.findViewById(R.id.buildingUpgrade);
             buildingTimeBeforeUpgrade = (TextView) itemView.findViewById(R.id.buildingTimeBeforeUpgrade);
+            timeToUpgradeLabel = (TextView) itemView.findViewById(R.id.timeToUpgradeLabel);
+            timeIndice = (TextView) itemView.findViewById(R.id.timeIndice);
         }
     }
 }

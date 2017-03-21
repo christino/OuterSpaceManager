@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import arnoux.com.outerspacemanager.outerspacemanager.Entity.BuildingDB;
 
+import static arnoux.com.outerspacemanager.outerspacemanager.retrofit.model.OuterSpaceManagerDB.BUILDING_ID;
+
 
 /**
  * Created by White on 20/03/2017.
@@ -20,7 +22,7 @@ public class OuterSpaceManagerDAO {
     // Database fields
     private SQLiteDatabase database;
     private OuterSpaceManagerDB dbHelper;
-    private String[] allColumns = { OuterSpaceManagerDB.BUILDING_ID,OuterSpaceManagerDB.BUILDING_NAME, OuterSpaceManagerDB.BUILDING_LEVEL,
+    private String[] allColumns = { BUILDING_ID,OuterSpaceManagerDB.BUILDING_NAME, OuterSpaceManagerDB.BUILDING_LEVEL,
     OuterSpaceManagerDB.BUILDING_TIMETOBUILDBYLEVEL, OuterSpaceManagerDB.BUILDING_TIMEBUILDINGLAUNCHED};
 
     public OuterSpaceManagerDAO(Context context) {
@@ -35,7 +37,7 @@ public class OuterSpaceManagerDAO {
 
     public BuildingDB createBuilding(int id, String name, int level, int timeToBuildByLevel, long timeBuildingLaunched) {
         ContentValues values = new ContentValues();
-        values.put(OuterSpaceManagerDB.BUILDING_ID, id);
+        values.put(BUILDING_ID, id);
         values.put(OuterSpaceManagerDB.BUILDING_NAME, name);
         values.put(OuterSpaceManagerDB.BUILDING_LEVEL, level);
         values.put(OuterSpaceManagerDB.BUILDING_TIMETOBUILDBYLEVEL, timeToBuildByLevel);
@@ -43,7 +45,7 @@ public class OuterSpaceManagerDAO {
         database.insert(OuterSpaceManagerDB.BUILDING_TABLE_NAME, null,
                 values);
         Cursor cursor = database.query(OuterSpaceManagerDB.BUILDING_TABLE_NAME,
-                allColumns, OuterSpaceManagerDB.BUILDING_ID + "=?" , new String[]{String.valueOf(id)},
+                allColumns, BUILDING_ID + "=?" , new String[]{String.valueOf(id)},
                 null, null, null);
         cursor.moveToFirst();
         BuildingDB building = cursorToBuilding(cursor);
@@ -64,6 +66,31 @@ public class OuterSpaceManagerDAO {
 
         cursor.close();
         return buildings;
+    }
+
+    public BuildingDB getCurrentBuilding(int id) {
+
+        Cursor cursor = database.query(OuterSpaceManagerDB.BUILDING_TABLE_NAME,
+                null, BUILDING_ID + " = ?", new String[]{String.valueOf(id)}, null, null, null);
+        BuildingDB building = null;
+
+        if (cursor.moveToFirst()) {
+            building = cursorToBuilding(cursor);
+        }
+
+        cursor.close();
+        return building;
+    }
+
+    public void deleteBuilding(int id) {
+
+        database.delete(OuterSpaceManagerDB.BUILDING_TABLE_NAME, BUILDING_ID
+                + " = \"" + id +"\"", null);
+    }
+
+    public void deleteAllBuildings() {
+
+        database.delete(OuterSpaceManagerDB.BUILDING_TABLE_NAME, null, null);
     }
 
     private BuildingDB cursorToBuilding(Cursor cursor) {

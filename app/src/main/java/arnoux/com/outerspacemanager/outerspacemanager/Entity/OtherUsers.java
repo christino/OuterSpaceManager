@@ -8,7 +8,7 @@ public class OtherUsers {
     private String username;
     private Double points;
 
-    public OtherUsers(String username, Integer password) {
+    public OtherUsers(String username, Double points) {
         this.username = username;
         this.points = points;
     }

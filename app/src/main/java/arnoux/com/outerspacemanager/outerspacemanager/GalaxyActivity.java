@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import arnoux.com.outerspacemanager.outerspacemanager.Entity.BuildingResponse;
+import arnoux.com.outerspacemanager.outerspacemanager.Entity.OtherUsersResponse;
 import arnoux.com.outerspacemanager.outerspacemanager.retrofit.model.OuterSpaceManagerService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,9 +29,9 @@ public class GalaxyActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_building_activity);
-        this.rvGalaxy = (RecyclerView) findViewById(R.id.rvBuildings);
-        // Permet de lier la recycler view avec l'élément recycler view dans le layout
+        setContentView(R.layout.activity_galaxy_activity);
+        this.rvGalaxy = (RecyclerView) findViewById(R.id.rvGalaxy);
+
         rvGalaxy.setLayoutManager(new LinearLayoutManager(this));
         SharedPreferences settings = getSharedPreferences(SHARED_PREFERENCES_FILENAME, 0);
         String currentToken = settings.getString(KEY_TOKEN, null);
@@ -42,16 +43,15 @@ public class GalaxyActivity extends AppCompatActivity{
 
         OuterSpaceManagerService service = retrofit.create(OuterSpaceManagerService.class);
 
-        Call<BuildingResponse> call = service.getBuildings(currentToken);
-        call.enqueue(new Callback<BuildingResponse>() {
+        Call<OtherUsersResponse> call = service.getOtherUsers(currentToken);
+        call.enqueue(new Callback<OtherUsersResponse>() {
             @Override
-            public void onResponse(Call<BuildingResponse> call, Response<BuildingResponse> response) {
-                rvGalaxy.setAdapter(new BuildingsAdapter(response.body().buildings, GalaxyActivity.this));
+            public void onResponse(Call<OtherUsersResponse> call, Response<OtherUsersResponse> response) {
+                rvGalaxy.setAdapter(new GalaxyAdapter(response.body().users, GalaxyActivity.this));
             }
 
             @Override
-            public void onFailure(Call<BuildingResponse> call, Throwable t) {
-
+            public void onFailure(Call<OtherUsersResponse> call, Throwable t) {
             }
         });
     }
