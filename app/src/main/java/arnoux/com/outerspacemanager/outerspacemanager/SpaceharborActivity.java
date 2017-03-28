@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import arnoux.com.outerspacemanager.outerspacemanager.Entity.BuildingResponse;
+import arnoux.com.outerspacemanager.outerspacemanager.Entity.SpaceshipResponse;
 import arnoux.com.outerspacemanager.outerspacemanager.retrofit.model.OuterSpaceManagerService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,21 +24,20 @@ import static arnoux.com.outerspacemanager.outerspacemanager.Settings.Setting.MY
 import static arnoux.com.outerspacemanager.outerspacemanager.Settings.Setting.SHARED_PREFERENCES_FILENAME;
 
 /**
- * Created by White on 13/03/2017.
+ * Created by White on 27/03/2017.
  */
 
-public class BuildingActivity extends AppCompatActivity{
+public class SpaceharborActivity extends AppCompatActivity {
 
-    private RecyclerView rvBuildings;
+    private RecyclerView rvSpaceships;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_building_activity);
-        this.rvBuildings = (RecyclerView) findViewById(R.id.rvBuildings);
+        setContentView(R.layout.activity_spaceharbor_activity);
+        this.rvSpaceships = (RecyclerView) findViewById(R.id.rvSpaceships);
 
-
-        rvBuildings.setLayoutManager(new LinearLayoutManager(this));
+        rvSpaceships.setLayoutManager(new LinearLayoutManager(this));
         SharedPreferences settings = getSharedPreferences(SHARED_PREFERENCES_FILENAME, 0);
         String currentToken = settings.getString(KEY_TOKEN, null);
 
@@ -48,24 +48,24 @@ public class BuildingActivity extends AppCompatActivity{
 
         OuterSpaceManagerService service = retrofit.create(OuterSpaceManagerService.class);
 
-        Call<BuildingResponse> call = service.getBuildings(currentToken);
-        call.enqueue(new Callback<BuildingResponse>() {
+        Call<SpaceshipResponse> call = service.getSpaceships(currentToken);
+        call.enqueue(new Callback<SpaceshipResponse>() {
             @Override
-            public void onResponse(Call<BuildingResponse> call, Response<BuildingResponse> response) {
-                rvBuildings.setAdapter(new BuildingsAdapter(response.body().buildings, BuildingActivity.this));
+            public void onResponse(Call<SpaceshipResponse> call, Response<SpaceshipResponse> response) {
+                rvSpaceships.setAdapter(new SpaceharborAdapter(response.body().ships, SpaceharborActivity.this));
             }
 
             @Override
-            public void onFailure(Call<BuildingResponse> call, Throwable t) {
+            public void onFailure(Call<SpaceshipResponse> call, Throwable t) {
 
             }
         });
 
-        if (ContextCompat.checkSelfPermission(BuildingActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+        if (ContextCompat.checkSelfPermission(SpaceharborActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
         {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(BuildingActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(SpaceharborActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             } else {
-                ActivityCompat.requestPermissions(BuildingActivity.this,
+                ActivityCompat.requestPermissions(SpaceharborActivity.this,
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
             }

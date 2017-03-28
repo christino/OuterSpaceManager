@@ -30,6 +30,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private Button signUpValidate;
     private EditText inputIdentifiant;
+    private EditText inputMail;
     private EditText inputPassword;
     private Button login;
 
@@ -43,6 +44,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             setContentView(R.layout.activity_signup);
             signUpValidate = (Button) findViewById(R.id.signUpValidate);
             inputIdentifiant = (EditText) findViewById(R.id.inputIdentifiant);
+            inputMail = (EditText) findViewById(R.id.inputEmail);
             inputPassword = (EditText) findViewById(R.id.inputPassword);
             login = (Button) findViewById(R.id.login);
             login.setOnClickListener(this);
@@ -63,7 +65,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.signUpValidate) {
-            User user = new User(inputIdentifiant.getText().toString(), inputPassword.getText().toString());
+            User user = new User(inputIdentifiant.getText().toString(), inputMail.getText().toString(), inputPassword.getText().toString());
 
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("https://outer-space-manager.herokuapp.com")
@@ -92,14 +94,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
                     //TODO: Handle errors here too
-                    Toast error = Toast.makeText(getApplicationContext(), "Ce compte existe déjà", 8);
+                    Toast error = Toast.makeText(getApplicationContext(), "Ce compte existe déjà", Toast.LENGTH_LONG);
                     error.show();
                 }
             });
         }
 
         if (view.getId() == R.id.login) {
-            User user = new User(inputIdentifiant.getText().toString(), inputPassword.getText().toString());
+            User user = new User(inputIdentifiant.getText().toString(), inputMail.getText().toString(), inputPassword.getText().toString());
 
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("https://outer-space-manager.herokuapp.com")

@@ -6,15 +6,21 @@ package arnoux.com.outerspacemanager.outerspacemanager.Entity;
 
 public class User {
     private String username;
+    private String email;
     private String password;
     private String token;
     private Double points;
     private Double gas;
     private Double minerals;
 
-    public User(String username, String password) {
+    public User(String username, String email, String password) {
         this.username = username;
+        this.email = email;
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getUsername() {

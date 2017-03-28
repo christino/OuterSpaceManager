@@ -5,6 +5,9 @@ import arnoux.com.outerspacemanager.outerspacemanager.Entity.BuildingResponse;
 import arnoux.com.outerspacemanager.outerspacemanager.Entity.OtherUsersResponse;
 import arnoux.com.outerspacemanager.outerspacemanager.Entity.Research;
 import arnoux.com.outerspacemanager.outerspacemanager.Entity.ResearchResponse;
+import arnoux.com.outerspacemanager.outerspacemanager.Entity.ShipIdAndAmount;
+import arnoux.com.outerspacemanager.outerspacemanager.Entity.Spaceship;
+import arnoux.com.outerspacemanager.outerspacemanager.Entity.SpaceshipResponse;
 import arnoux.com.outerspacemanager.outerspacemanager.Entity.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -41,4 +44,10 @@ public interface OuterSpaceManagerService {
 
     @GET("/api/v1/users/0/19")
     Call<OtherUsersResponse> getOtherUsers(@Header("x-access-token") String accessToken);
+
+    @GET("/api/v1/ships")
+    Call<SpaceshipResponse> getSpaceships(@Header("x-access-token") String accessToken);
+
+    @POST("/api/vXXX/ships/create/{shipId}")
+    Call<Spaceship> createShip(@Path("shipId") ShipIdAndAmount shipId, @Header("x-access-token") String token);
 }

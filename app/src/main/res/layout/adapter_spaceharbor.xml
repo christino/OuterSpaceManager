@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <TextView
+        android:id="@+id/spaceshipShowName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nom du vaisseau"
+        android:textSize="60px"
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Coût en carburant : "/>
+
+        <TextView
+            android:id="@+id/spaceshipShowGasCost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="300"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="20px"
+            android:layout_height="wrap_content"
+            android:text="Coût en minerais : "/>
+
+        <TextView
+            android:id="@+id/spaceshipShowMineralCost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="120"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Niveau spacioport requis : "/>
+
+        <TextView
+            android:id="@+id/spaceshipShowSpaceharborLevelRequired"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="20px"
+            android:layout_height="wrap_content"
+            android:text="Temps pour la construction : "/>
+
+        <TextView
+            android:id="@+id/spaceshipShowTimeRequiredForConstruction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="120"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="STATS"
+        android:layout_marginTop="20px"
+        android:layout_marginBottom="20px"
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Résistance : "/>
+
+        <TextView
+            android:id="@+id/spaceshipShowLife"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="60"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Attaque moyenne : "
+            android:layout_marginLeft="20px"/>
+
+        <TextView
+            android:id="@+id/spaceshipShowAttackSum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="45"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bouclier : "/>
+
+        <TextView
+            android:id="@+id/spaceshipShowShield"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20px"
+            android:text="Vitesse : "/>
+
+        <TextView
+            android:id="@+id/spaceshipShowSpeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1000"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20px">
+
+        <EditText
+            android:id="@+id/spaceshipAskNumberToBuild"
+            android:layout_width="200px"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/spaceshipConfirmBuild"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Construire"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20px"
+        android:layout_marginTop="20px"
+        android:background="@color/spacialblue"/>
+
+
+</LinearLayout>

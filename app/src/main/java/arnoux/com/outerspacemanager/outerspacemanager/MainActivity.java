@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView userMineral;
     private Button research;
     private Button galaxy;
+    private Button spaceharbor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +54,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         batiments = (Button) findViewById(R.id.menu_batiments);
         research = (Button) findViewById(R.id.menu_recherches);
         galaxy = (Button) findViewById(R.id.menu_galaxie);
+        spaceharbor = (Button) findViewById(R.id.menu_chantierspacial);
         deconnexion.setOnClickListener(this);
         batiments.setOnClickListener(this);
         research.setOnClickListener(this);
         galaxy.setOnClickListener(this);
+        spaceharbor.setOnClickListener(this);
+
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://outer-space-manager.herokuapp.com")
@@ -113,6 +117,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         } else if (view.getId() == R.id.menu_galaxie){
             Intent intent = new Intent(MainActivity.this, GalaxyActivity.class);
+            startActivity(intent);
+        } else if (view.getId() == R.id.menu_chantierspacial){
+            Intent intent = new Intent(MainActivity.this, SpaceharborActivity.class);
             startActivity(intent);
         }
 
